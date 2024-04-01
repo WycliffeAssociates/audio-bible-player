@@ -41,7 +41,6 @@ export function App(props: appProps) {
     setSavedOffline(saved);
   }
   async function resolveSrc(vid: bcVideo) {
-    debugger;
     if (import.meta.env.SSR) return vid.mp4Src.src;
     if (vid.blobSrc) return vid.blobSrc;
     const blob = (await get(vid.id!)) as Blob | undefined;
