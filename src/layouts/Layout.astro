@@ -1,0 +1,27 @@
+---
+interface Props {
+  title: string;
+}
+
+const {title} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
+    <!-- <script src="/src/sw.ts"></script> -->
+    <!-- { pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} /> } -->
+    <script src="/src/pwa.ts"></script>
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+    <script src="/bc/player.js" is:inline></script>
+  </body>
+</html>

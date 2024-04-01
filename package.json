@@ -1,0 +1,47 @@
+{
+  "name": "",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build-check": "astro check && astro build",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.5.10",
+    "@astrojs/cloudflare": "^9.2.1",
+    "@astrojs/solid-js": "^4.0.1",
+    "@kobalte/core": "^0.12.6",
+    "astro": "^4.5.10",
+    "idb-keyval": "^6.2.1",
+    "solid-js": "1.8.16",
+    "typescript": "^5.4.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240320.1",
+    "@types/video.js": "^7.3.57",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
+    "@unocss/reset": "^0.58.7",
+    "@unocss/transformer-directives": "^0.58.7",
+    "@unocss/transformer-variant-group": "^0.58.7",
+    "@vite-pwa/astro": "^0.3.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-astro": "^0.33.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-solid": "^0.13.2",
+    "typescript": "^5.2.2",
+    "unocss": "^0.58.7",
+    "vite-plugin-pwa": "^0.19.7",
+    "workbox-core": "^7.0.0",
+    "workbox-expiration": "^7.0.0",
+    "workbox-precaching": "^7.0.0",
+    "workbox-routing": "^7.0.0",
+    "workbox-strategies": "^7.0.0",
+    "workbox-window": "^7.0.0",
+    "wrangler": "^3.39.0"
+  }
+}

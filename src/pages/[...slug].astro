@@ -1,0 +1,35 @@
+---
+import Layout from "@layouts/Layout.astro";
+import {getPlaylistData} from "@lib/api";
+import {App} from "@components/App";
+import {addMp4Srces, sortVideosCanonically} from "@lib/utils";
+const playlistToFetch = "eng-bermuda-nt";
+const data = await getPlaylistData(Astro.url.origin, playlistToFetch);
+if (!data) return new Response(404);
+const playlist = data.data;
+if (!playlist || !playlist.videos) {
+  throw new Error("No videos found");
+}
+sortVideosCanonically(playlist.videos);
+playlist.videos = addMp4Srces(playlist.videos);
+
+const {slug} = Astro.params;
+const parts = slug ? slug.split("/") : null;
+const book = parts?.[0] ?? "mat";
+const chapter = parts?.[1] ?? "1";
+const intialVid = playlist.videos.find((vid) => {
+  const matchesBook =
+    vid.custom_fields?.book?.toLowerCase() === book.toLowerCase() ||
+    vid.custom_fields.localized_book_name.toLowerCase() === book.toLowerCase();
+  const matchesChapter = Number(vid.custom_fields.chapter) === Number(chapter);
+  return matchesBook && matchesChapter;
+});
+---
+
+<Layout title="Bermuda New Testament">
+  <App
+    playlist={playlist}
+    initialVideo={intialVid || playlist.videos[0]}
+    client:load
+  />
+</Layout>

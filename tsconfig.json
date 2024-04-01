@@ -1,0 +1,25 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "baseUrl": ".",
+    "allowImportingTsExtensions": true,
+    "lib": ["ESNext", "DOM", "WebWorker"],
+    "types": [
+      "astro/client",
+      "@cloudflare/workers-types",
+      "vite-plugin-pwa/client",
+      "@types/video.js"
+    ],
+    "paths": {
+      "@layouts/*": ["src/layouts/*"],
+      "@components/*": ["src/components/*"],
+      "@lib/*": ["src/lib/*"],
+      "@customTypes/*": ["src/customTypes/*"],
+      "@utils": ["src/lib/utils.ts"],
+      "@i18n/*": ["src/i18n/*"],
+      "@src/*": ["src/*"]
+    }
+  }
+}
