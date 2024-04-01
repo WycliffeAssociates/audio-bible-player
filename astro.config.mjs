@@ -30,11 +30,11 @@ export default defineConfig({
         /* other options */
       },
       injectManifest: {
-        // globIgnores: [
-        //   "**/node_modules/**/*",
-        //   "$server_build/*",
-        //   "$server_build/**/*",
-        // ],
+        globIgnores: [
+          "**/node_modules/**/*",
+          "$server_build/*",
+          "$server_build/**/*",
+        ],
       },
     }),
     UnoCSS({
