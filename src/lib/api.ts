@@ -3,12 +3,13 @@ import {playbackApi, type HttpResponse, type PlaylistResponse} from "./bcApi";
 
 export async function getPlaylistData(
   origin: string,
-  playlist: string
+  playlist: string,
+  env: any
 ): Promise<HttpResponse<bcPlaylist, void> | undefined> {
   try {
     // const urlBase = import.meta.env.PROD ? origin : "http://127.0.0.1:8788";
-    const policyKey = import.meta.env.POLICY_KEY;
-    const accountId = import.meta.env.ACCOUNT_ID;
+    const policyKey = env.POLICY_KEY;
+    const accountId = env.ACCOUNT_ID;
 
     const pbApi = new playbackApi({
       baseUrl: "https://edge.api.brightcove.com/playback/v1",
