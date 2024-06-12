@@ -85,8 +85,10 @@ export function Player(props: PlayerProps) {
 
       // cleanup
       return () => {
-        window.removeEventListener("keydown", keyListener);
-        window.removeEventListener("mousemove", moveListener);
+        if (typeof window !== "undefined") {
+          window.removeEventListener("keydown", keyListener);
+          window.removeEventListener("mousemove", moveListener);
+        }
       };
     }
   });
@@ -178,7 +180,6 @@ function AudioElement(props: AudioElProps) {
         // }
       }}
       onEnded={() => {
-        console.log(props.userPrefs().autoplay);
         if (props.userPrefs().autoplay) {
           props.playNext();
           props.audioEl().addEventListener(
@@ -287,16 +288,17 @@ function PlayerControls(props: PlayerControlsProps) {
           <Progress.Track
             ref={props.progressRef}
             class="relative w-full h-15px bg-gray-400 rounded-full "
-            onMouseDown={(event) => {
-              props.setIsScrubbing(true);
+            onMouseDown={(event: MouseEvent) => {
               const target = event.target as HTMLElement;
+              const currentTarget = event.currentTarget as HTMLElement;
+              if (!target || !currentTarget) return;
+              props.setIsScrubbing(true);
               if (target.dataset.role === "progress-thumb") {
                 return;
               }
-              const barWidth = event.currentTarget.clientWidth;
+              const barWidth = currentTarget.clientWidth;
               const clickOffset =
-                event.clientX -
-                event.currentTarget.getBoundingClientRect().left;
+                event.clientX - currentTarget.getBoundingClientRect().left;
               const clickPercentage = clickOffset / barWidth;
               props.audioEl().currentTime =
                 clickPercentage * props.vidTimeSeconds();

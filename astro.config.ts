@@ -5,15 +5,15 @@ import solidJs from "@astrojs/solid-js";
 import cloudflare from "@astrojs/cloudflare";
 import transformerVariantGroup from "@unocss/transformer-variant-group";
 
+const isDev = import.meta.env.DEV;
+
 // https://astro.build/config
 export default defineConfig({
   output: "server",
   devToolbar: {
     enabled: false,
   },
-  adapter: cloudflare({
-    mode: "directory",
-  }),
+  adapter: cloudflare({}),
   integrations: [
     AstroPWA({
       workbox: {
@@ -25,7 +25,7 @@ export default defineConfig({
       registerType: "autoUpdate",
       // manifest: {},
       devOptions: {
-        enabled: false,
+        enabled: true,
         type: "module",
         /* other options */
       },
@@ -43,4 +43,10 @@ export default defineConfig({
     }),
     solidJs(),
   ],
+  vite: {
+    resolve: {
+      conditions: !isDev ? ["worker", "webworker"] : [],
+      mainFields: !isDev ? ["module"] : [],
+    },
+  },
 });

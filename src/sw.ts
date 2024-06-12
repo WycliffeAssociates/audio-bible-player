@@ -20,10 +20,7 @@ self.addEventListener("fetch", async (event) => {
     event.respondWith(getFile(parsed));
 
     async function getFile(parsed: Record<string, string>) {
-      console.log("SW GOING!");
       const response = await fetch(parsed.url);
-      // const {readable, writable} = new TransformStream();
-      // response.body?.pipeTo(writable);
       return new Response(response.body, {
         headers: {
           "Content-Type": "application/octet-stream; charset=utf-8",

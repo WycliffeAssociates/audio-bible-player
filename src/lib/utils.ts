@@ -29,7 +29,6 @@ export function addMp4Srces(videos: bcVideo[]) {
       // No http insecure protocol allowed
       return s.src.startsWith("https");
     });
-    console.log(video.sources.length);
     const mp4Src = video.sources?.find((s) => s.container === "MP4");
     return {
       ...video,
