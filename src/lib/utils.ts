@@ -1,5 +1,5 @@
 import type {bcVideo} from "@customTypes/types";
-
+import type {configType} from "@src/domainConfig";
 export function sortVideosCanonically(videos: bcVideo[]) {
   return videos?.sort((a, b) => {
     if (
@@ -73,4 +73,20 @@ export function setPrefs<K extends keyof userPrefs>(
   prefs[key] = value;
   localStorage.setItem("userPrefs", JSON.stringify(prefs));
   return prefs;
+}
+
+export function getMatchingDomainConfigKey(config: configType, origin: string) {
+  // localhost and preview sites, just use one to test against.
+  if (
+    origin.includes("dot-web.pages.dev") ||
+    origin.includes("127.0.0.1") ||
+    origin.includes("localhost")
+  ) {
+    origin = "bermuda";
+  }
+  let matchingKey = Object.keys(config).find((key) =>
+    origin.toLowerCase().includes(key.toLowerCase())
+  ) as keyof configType;
+  if (!matchingKey || !config[matchingKey]) return undefined;
+  return config[matchingKey];
 }

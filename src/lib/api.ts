@@ -1,8 +1,7 @@
-import type {bcPlaylist, bcVideo} from "@customTypes/types";
-import {playbackApi, type HttpResponse, type PlaylistResponse} from "./bcApi";
+import type {bcPlaylist} from "@customTypes/types";
+import {playbackApi, type HttpResponse} from "./bcApi";
 
 export async function getPlaylistData(
-  origin: string,
   playlist: string,
   env: any
 ): Promise<HttpResponse<bcPlaylist, void> | undefined> {

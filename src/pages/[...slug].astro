@@ -2,11 +2,22 @@
 import Layout from "@layouts/Layout.astro";
 import {getPlaylistData} from "@lib/api";
 import {App} from "@components/App";
-import {addMp4Srces, sortVideosCanonically} from "@lib/utils";
-const playlistToFetch = "eng-bermuda-nt";
+import {
+  addMp4Srces,
+  getMatchingDomainConfigKey,
+  sortVideosCanonically,
+} from "@lib/utils";
+// FIGURE OUT WHICH PLAYLIST TO LOAD BASED ON DOMAIN
+import {config} from "@src/domainConfig";
 
+let originToMatch = import.meta.env.PROD ? Astro.url.origin : "bermuda";
+const configRecord = getMatchingDomainConfigKey(config, originToMatch);
+if (!configRecord) return new Response(404);
+const playlistToFetch = configRecord.playlist;
+
+// cloudflare env is on local.runtime, .env is import.meta for localhost.
 const {env} = import.meta.env.DEV ? import.meta : Astro.locals.runtime;
-const data = await getPlaylistData(Astro.url.origin, playlistToFetch, env);
+const data = await getPlaylistData(playlistToFetch, env);
 if (!data) return new Response(404);
 const playlist = data.data;
 if (!playlist || !playlist.videos) {
@@ -28,7 +39,7 @@ const intialVid = playlist.videos.find((vid) => {
 });
 ---
 
-<Layout title="Bermuda New Testament">
+<Layout title={configRecord.title}>
   <App
     playlist={playlist}
     initialVideo={intialVid || playlist.videos[0]}
