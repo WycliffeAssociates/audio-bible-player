@@ -78,7 +78,7 @@ export function setPrefs<K extends keyof userPrefs>(
 export function getMatchingDomainConfigKey(config: configType, origin: string) {
   // localhost and preview sites, just use one to test against.
   if (
-    origin.includes("dot-web.pages.dev") ||
+    origin.includes("audio-bible-player.pages.dev") ||
     origin.includes("127.0.0.1") ||
     origin.includes("localhost")
   ) {
