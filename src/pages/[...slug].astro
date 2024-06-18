@@ -39,7 +39,7 @@ const intialVid = playlist.videos.find((vid) => {
 });
 ---
 
-<Layout title={configRecord.title}>
+<Layout title={configRecord.title} description={configRecord.description}>
   <App
     playlist={playlist}
     initialVideo={intialVid || playlist.videos[0]}
