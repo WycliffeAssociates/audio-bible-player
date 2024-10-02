@@ -4,6 +4,7 @@ import UnoCSS from "unocss/astro";
 import solidJs from "@astrojs/solid-js";
 import cloudflare from "@astrojs/cloudflare";
 import transformerVariantGroup from "@unocss/transformer-variant-group";
+import {manifest} from "./manifest";
 
 const isDev = import.meta.env.DEV;
 
@@ -23,7 +24,7 @@ export default defineConfig({
       filename: "sw.ts",
       strategies: "injectManifest",
       registerType: "autoUpdate",
-      // manifest: {},
+      manifest: manifest,
       devOptions: {
         enabled: true,
         type: "module",

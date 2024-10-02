@@ -5,6 +5,7 @@ interface Props {
 }
 
 const {title, description} = Astro.props;
+import {pwaInfo} from "virtual:pwa-info";
 ---
 
 <!doctype html>
@@ -16,6 +17,8 @@ const {title, description} = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
+    {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+
     <!-- <script src="/src/sw.ts"></script> -->
     <!-- { pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} /> } -->
     <script src="/src/pwa.ts"></script>
