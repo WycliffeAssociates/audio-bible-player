@@ -12,31 +12,31 @@
     "check": "astro check"
   },
   "dependencies": {
-    "@astrojs/check": "^0.7.0",
-    "@astrojs/cloudflare": "^10.4.0",
-    "@astrojs/solid-js": "^4.3.0",
-    "@kobalte/core": "^0.13.3",
-    "astro": "^4.10.2",
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/cloudflare": "^11.1.0",
+    "@astrojs/solid-js": "^4.4.2",
+    "@kobalte/core": "^0.13.7",
+    "astro": "^4.15.12",
     "idb-keyval": "^6.2.1",
-    "solid-js": "1.8.17",
-    "typescript": "^5.4.5"
+    "solid-js": "1.9.2",
+    "typescript": "^5.6.3"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240605.0",
+    "@cloudflare/workers-types": "^4.20241004.0",
     "@types/video.js": "^7.3.58",
-    "@unocss/reset": "^0.61.0",
-    "@unocss/transformer-directives": "^0.61.0",
-    "@unocss/transformer-variant-group": "^0.61.0",
-    "@vite-pwa/astro": "^0.4.0",
+    "@unocss/reset": "^0.63.4",
+    "@unocss/transformer-directives": "^0.63.4",
+    "@unocss/transformer-variant-group": "^0.63.4",
+    "@vite-pwa/astro": "^0.4.3",
     "typescript": "^5.2.2",
-    "unocss": "^0.61.0",
-    "vite-plugin-pwa": "^0.20.0",
+    "unocss": "^0.63.4",
+    "vite-plugin-pwa": "^0.20.5",
     "workbox-core": "^7.1.0",
     "workbox-expiration": "^7.1.0",
     "workbox-precaching": "^7.1.0",
     "workbox-routing": "^7.1.0",
     "workbox-strategies": "^7.1.0",
     "workbox-window": "^7.1.0",
-    "wrangler": "^3.60.2"
+    "wrangler": "^3.80.2"
   }
 }

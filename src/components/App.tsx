@@ -13,7 +13,8 @@ import {
 import {Player} from "./Player";
 import {formatSeconds} from "@lib/utils";
 import {get, set, keys, del} from "idb-keyval";
-import {Button, ToggleButton} from "@kobalte/core";
+import {Button} from "@kobalte/core/button";
+import {ToggleButton} from "@kobalte/core/toggle-button";
 import {MaterialSymbolsFavorite, MdiLoading} from "./Icons";
 
 type appProps = {
@@ -226,7 +227,7 @@ function ChaptersList(props: ChaptersListProps) {
           <For each={props.chapters()}>
             {(chap) => (
               <li class="justify-evenl w-full flex justify-between">
-                <Button.Root
+                <Button
                   class="grid grid-cols-4 w-full focus:(ring-2 ring-inset-2 ring-blue-700  outline-none) hover:(bg-blue-200) px-2 py-1"
                   onClick={() => props.setVideo(chap)}
                   as="div"
@@ -235,7 +236,7 @@ function ChaptersList(props: ChaptersListProps) {
                   <p class="">{Number(chap.custom_fields.chapter)}</p>
                   <p class="">{props.vidDetails(chap).mb} MB</p>
                   <p class="">{props.vidDetails(chap).duration}</p>
-                  <ToggleButton.Root
+                  <ToggleButton
                     class="text-2xl w-fit"
                     data-name="toggle-saved"
                     pressed={props.savedOffline().includes(chap.id!)}
@@ -265,8 +266,8 @@ function ChaptersList(props: ChaptersListProps) {
                         <MdiLoading />
                       </span>
                     </Show>
-                  </ToggleButton.Root>
-                </Button.Root>
+                  </ToggleButton>
+                </Button>
               </li>
             )}
           </For>

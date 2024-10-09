@@ -7,7 +7,12 @@ import {
   type Setter,
   type Accessor,
 } from "solid-js";
-import {Progress, ToggleButton, Slider} from "@kobalte/core";
+import {ToggleButton} from "@kobalte/core/toggle-button";
+import {Progress} from "@kobalte/core/progress";
+import {Slider} from "@kobalte/core/slider";
+import {Button} from "@kobalte/core/button";
+import type {DownloadVideo} from "@src/pages/api/downloadVideo";
+
 import {
   FluentSkipBackward1048Filled,
   FluentSkipForward1048Filled,
@@ -67,7 +72,7 @@ export function Player(props: PlayerProps) {
       // scrub
       const moveListener = (event: MouseEvent) => {
         if (!isScrubbing()) return;
-
+        if (!progressRef) return;
         const barWidth = progressRef.offsetWidth;
         // const target = event.currentTarget as HTMLElement;
         const newClickOffset =
@@ -99,15 +104,20 @@ export function Player(props: PlayerProps) {
     }
   }
 
-  const downloadUrlComponent = () => {
-    return JSON.stringify({
+  const downloadUrlComponent: () => DownloadVideo = () => {
+    return {
+      name: props.vid.custom_fields.localized_book_name,
       url: props.vid.mp4Src.src,
-      name:
-        props.vid.custom_fields.localized_book_name +
-        " " +
-        props.vid.custom_fields.chapter,
       size: props.vid.mp4Src.size,
-    });
+    };
+    // return JSON.stringify({
+    //   url: props.vid.mp4Src.src,
+    //   name:
+    //     props.vid.custom_fields.localized_book_name +
+    //     " " +
+    //     props.vid.custom_fields.chapter,
+    //   size: props.vid.mp4Src.size,
+    // });
   };
 
   return (
@@ -210,6 +220,7 @@ function AudioElement(props: AudioElProps) {
                   .buffered.end(props.audioEl().buffered.length - 1 - i) *
                   100) /
                 duration;
+              console.log({bufferedPercentage});
               props.setBufferedAmt(bufferedPercentage);
 
               // Break the loop once a buffered segment is found that starts before or at the current playback time
@@ -272,7 +283,7 @@ function PlayerControls(props: PlayerControlsProps) {
           <FluentSkipForward1048Filled />
         </button>
       </div>
-      <Progress.Root
+      <Progress
         minValue={0}
         maxValue={1}
         value={props.progressAmount()}
@@ -324,13 +335,13 @@ function PlayerControls(props: PlayerControlsProps) {
 
           <div class="w-8ch">{formatSeconds(props.vidTimeSeconds())}</div>
         </div>
-      </Progress.Root>
+      </Progress>
     </div>
   );
 }
 
 type AdditionalControlsProps = {
-  downloadUrlComponent: () => string;
+  downloadUrlComponent: () => DownloadVideo;
   userPrefs: Accessor<userPrefs>;
   setUserPrefs: Setter<userPrefs>;
   audioEl: Accessor<HTMLAudioElement>;
@@ -339,12 +350,30 @@ function AdditionalVidControls(props: AdditionalControlsProps) {
   return (
     <div class="mt-4 flex items-center gap-6 justify-center">
       <span class="text-2xl hover:text-blue-700">
-        <a href={`/sw-handle-saving?vid=${props.downloadUrlComponent()}`}>
-          <MaterialSymbolsLightDownload2 />
-        </a>
+        <form action="/api/downloadVideo" method="post">
+          <input
+            type="hidden"
+            name="payload"
+            value={JSON.stringify(props.downloadUrlComponent())}
+          />
+          <button type="submit">
+            <MaterialSymbolsLightDownload2 />
+          </button>
+        </form>
+        {/* <Button
+          onClick={() => {
+            fetch("/api/downloadVideo", {
+              method: "POST",
+              body: JSON.stringify(props.downloadUrlComponent()),
+            });
+          }}
+        >
+        </Button> */}
+        {/* <a href={`/sw-handle-saving?vid=${props.downloadUrlComponent()}`}>
+        </a> */}
       </span>
       <span class="text-2xl font-bold">
-        <ToggleButton.Root
+        <ToggleButton
           class="toggle-button"
           aria-label="autoplay"
           pressed={props.userPrefs().autoplay}
@@ -360,10 +389,10 @@ function AdditionalVidControls(props: AdditionalControlsProps) {
               }`}
             />
           )}
-        </ToggleButton.Root>
+        </ToggleButton>
       </span>
 
-      <Slider.Root
+      <Slider
         class="relative flex flex-col items-center select-none touch-none w-100px"
         defaultValue={props.userPrefs().speed}
         minValue={0.25}
@@ -391,7 +420,7 @@ function AdditionalVidControls(props: AdditionalControlsProps) {
             <Slider.ValueLabel /> x
           </div>
         </div>
-      </Slider.Root>
+      </Slider>
     </div>
   );
 }
